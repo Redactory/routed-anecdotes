@@ -6,10 +6,30 @@ const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
     <ul>
-      {anecdotes.map(anecdote => <li key={anecdote.id} >{anecdote.content}</li>)}
+      {anecdotes.map(anecdote => 
+        <li key={anecdote.id} >
+          <Link to={`/anecdotes/${anecdote.id}`}> {anecdote.content} </Link>
+        </li>)}
     </ul>
   </div>
-)
+);
+
+const Anecdote = ({anecdote}) => {
+  const margin = {
+    marginBottom: '12px'
+  };
+
+  return (
+    <div>
+      <h2> {anecdote.content} by {anecdote.author} </h2>
+      <div style={margin}> has {anecdote.votes} votes </div>
+      <div style={margin}> 
+        <a href={anecdote.info}> {anecdote.info} </a> 
+      </div>
+    </div>
+  );
+};
+
 
 const About = () => (
   <div>
@@ -29,7 +49,7 @@ const Footer = () => (
   <div>
     Anecdote app for <a href='https://courses.helsinki.fi/fi/tkt21009'>Full Stack -sovelluskehitys</a>.
 
-    See <a href='https://github.com/fullstack-hy2019/routed-anecdotes/blob/master/src/App.js'>https://github.com/fullstack-hy2019/routed-anecdotes/blob/master/src/App.js</a> for the source code.
+    See <a href='https://github.com/fullstack-hy2019/routed-anecdotes'> https://github.com/fullstack-hy2019/routed-anecdotes </a> for the source code.
   </div>
 )
 
@@ -141,6 +161,12 @@ const App = () => {
             <Route exact path="/about" render={() =>
               <div>
                 <About />
+                <Footer />
+              </div>
+            }/>
+            <Route exact path="/anecdotes/:id" render={({match}) =>
+              <div> 
+                <Anecdote anecdote={anecdoteById(match.params.id)} />
                 <Footer />
               </div>
             }/>
