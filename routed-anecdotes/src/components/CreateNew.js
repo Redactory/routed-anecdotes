@@ -1,22 +1,30 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 
 const CreateNew = (props) => {
-    const [content, setContent] = useState('')
-    const [author, setAuthor] = useState('')
-    const [info, setInfo] = useState('')
-  
+    const [content, setContent] = useState('');
+    const [author, setAuthor] = useState('');
+    const [info, setInfo] = useState('');
+
+    const addNew = (anecdote) => {
+        anecdote.id = (Math.random() * 10000).toFixed(0);
+        props.setAnecdotes(props.anecdotes.concat(anecdote));
+    };
   
     const handleSubmit = (e) => {
       e.preventDefault()
-      props.addNew({
+      addNew({
         content,
         author,
         info,
         votes: 0
-      })
-  
-      console.log('HISTORIA', props.history);
-    }
+      });
+
+      props.history.push('/');
+      props.setNotification(`a new anecdote ${content} created!`);
+
+      setInterval(() => props.setNotification(''), 10000);
+    };
   
     return (
       <div>
@@ -40,4 +48,4 @@ const CreateNew = (props) => {
     )
   }
 
-  export default CreateNew;
+  export default withRouter(CreateNew);

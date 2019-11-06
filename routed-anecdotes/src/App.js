@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router,
-Route, Link, Redirect, withRouter } from 'react-router-dom';
+Route, Link, Redirect } from 'react-router-dom';
 import AnecdoteList from './components/AnecdoteList';
 import Footer from './components/Footer';
 import About from './components/About';
 import CreateNew from './components/CreateNew';
 import Anecdote from './components/Anecdote';
+import Notification from './components/Notification';
 
 const App = () => {
   const [anecdotes, setAnecdotes] = useState([
@@ -27,28 +28,22 @@ const App = () => {
 
   const [notification, setNotification] = useState('')
 
-  const addNew = (anecdote) => {
-    anecdote.id = (Math.random() * 10000).toFixed(0)
-    setAnecdotes(anecdotes.concat(anecdote))
-  }
-
-  const anecdoteById = (id) =>
-    anecdotes.find(a => a.id === id)
+  const anecdoteById = (id) => anecdotes.find(a => a.id === id);
 
   const vote = (id) => {
-    const anecdote = anecdoteById(id)
+    const anecdote = anecdoteById(id);
 
     const voted = {
       ...anecdote,
       votes: anecdote.votes + 1
-    }
+    };
 
     setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
-  }
+  };
 
   const padding = {
     paddingRight: 5
-  }
+  };
 
   return (
     <div>
@@ -63,13 +58,14 @@ const App = () => {
             </div>
             <Route exact path="/" render={() => 
               <div>
+                <Notification notification={notification} />
                 <AnecdoteList anecdotes={anecdotes} />
                 <Footer />
               </div>
               } />
             <Route exact path="/create" render={() =>
               <div>
-                <CreateNew addNew={addNew} />
+                <CreateNew anecdotes={anecdotes} setAnecdotes={setAnecdotes} setNotification={setNotification}/>
                 <Footer />
               </div>
             } />

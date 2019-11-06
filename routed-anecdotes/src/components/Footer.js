@@ -6,6 +6,6 @@ const Footer = () => (
   
       See <a href='https://github.com/fullstack-hy2019/routed-anecdotes'> https://github.com/fullstack-hy2019/routed-anecdotes </a> for the source code.
     </div>
-  )
+  );
 
   export default Footer;
