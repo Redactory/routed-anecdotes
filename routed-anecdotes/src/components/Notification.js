@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 const styling = (notification) => {
   if (notification.length > 0) {
@@ -22,4 +23,11 @@ const Notification = (props) => {
   );
 }
 
-export default Notification;
+const mapStateToProps = (state) => {
+  return {
+    notification: state.notification
+  }
+}
+
+const connectedNotification = connect(mapStateToProps)(Notification);
+export default connectedNotification;

@@ -26,8 +26,6 @@ const App = () => {
     }
   ])
 
-  const [notification, setNotification] = useState('')
-
   const anecdoteById = (id) => anecdotes.find(a => a.id === id);
 
   const vote = (id) => {
@@ -38,7 +36,7 @@ const App = () => {
       votes: anecdote.votes + 1
     };
 
-    setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
+    setAnecdotes(anecdotes.map(a => a.id === id ? voted : a));
   };
 
   const padding = {
@@ -58,14 +56,14 @@ const App = () => {
             </div>
             <Route exact path="/" render={() => 
               <div>
-                <Notification notification={notification} />
+                <Notification />
                 <AnecdoteList anecdotes={anecdotes} />
                 <Footer />
               </div>
               } />
             <Route exact path="/create" render={() =>
               <div>
-                <CreateNew anecdotes={anecdotes} setAnecdotes={setAnecdotes} setNotification={setNotification}/>
+                <CreateNew anecdotes={anecdotes} setAnecdotes={setAnecdotes} />
                 <Footer />
               </div>
             } />

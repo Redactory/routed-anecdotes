@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setNotification } from '../reducers/notificationReducer';
 
 const CreateNew = (props) => {
     const [content, setContent] = useState('');
@@ -12,7 +14,7 @@ const CreateNew = (props) => {
     };
   
     const handleSubmit = (e) => {
-      e.preventDefault()
+      e.preventDefault();
       addNew({
         content,
         author,
@@ -21,9 +23,7 @@ const CreateNew = (props) => {
       });
 
       props.history.push('/');
-      props.setNotification(`a new anecdote ${content} created!`);
-
-      setInterval(() => props.setNotification(''), 10000);
+      props.setNotification(`a new anecdote ${content} created!`, 10000);
     };
   
     return (
@@ -48,4 +48,9 @@ const CreateNew = (props) => {
     )
   }
 
-  export default withRouter(CreateNew);
+  const mapDispatchToProps = {
+    setNotification
+  }
+
+  const connectCreateNew = connect(null, mapDispatchToProps)(CreateNew);
+  export default withRouter(connectCreateNew);
